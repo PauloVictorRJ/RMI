@@ -27,12 +27,14 @@ public class JuntosImpl extends UnicastRemoteObject implements JuntosInterface {
     @Override
     public void conectar(JuntosClientInterface cliente) throws RemoteException {
         try {
-            cliente.pegarNome();
+            cliente.setNome();
             if (jogador1 == null) {
                 jogador1 = cliente;
+                System.out.println("Jogador " + jogador1.getNome() + " se conectou como jogador 1.");
                 enviarMensagem("Você é o jogador 1. Aguardando o jogador 2...", jogador1);
             } else if (jogador2 == null) {
                 jogador2 = cliente;
+                System.out.println("Jogador " + jogador2.getNome() + " se conectou como jogador 2.");
                 enviarMensagem("Você é o jogador 2.", jogador2);
                 enviarMensagemTodos("Iniciando partida...");
                 iniciarJogo();
@@ -53,6 +55,7 @@ public class JuntosImpl extends UnicastRemoteObject implements JuntosInterface {
         }
 
         try {
+        	System.out.println("Jogador " + cliente.getNome() + " se desconectou.");
             enviarMensagem("Você foi desconectado.", cliente);
 
             if (jogador1 == null || jogador2 == null) {
@@ -66,7 +69,7 @@ public class JuntosImpl extends UnicastRemoteObject implements JuntosInterface {
     @Override
     public void enviarPalavra(String palavra, JuntosClientInterface cliente) throws RemoteException {
         try {
-            System.out.println("Recebi a palavra " + palavra + " de " + cliente.enviarNome());
+            System.out.println("Recebi a palavra " + palavra + " de " + cliente.getNome());
             if (palavra1 == null) {
                 palavra1 = palavra;
                 enviarMensagem("Aguardando o outro jogador...", cliente);
@@ -80,6 +83,8 @@ public class JuntosImpl extends UnicastRemoteObject implements JuntosInterface {
     }
 
     private void iniciarJogo() throws RemoteException {
+    	palavra1 = null;
+    	palavra2 = null;
         gerarLetra();
         System.out.println("Gerei a letra " + letraAtual);
         iniciarClienteAsync(jogador1);
@@ -120,17 +125,19 @@ public class JuntosImpl extends UnicastRemoteObject implements JuntosInterface {
             try {
                 enviarMensagemTodos("Parabéns, vocês venceram! A palavra é: " + palavra1);
                 enviarMensagemTodos("Obrigado por jogar!");
-                System.out.println(corVerde + "Parabéns, vocês venceram! A palavra é: " + palavra1 + resetarCor);
+                System.out.println(corVerde + "Os jogadores venceram! A palavra é: " + palavra1 + resetarCor);
                 System.out.println("Game Over!");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             desconectar(jogador1);
             desconectar(jogador2);
+            System.out.println("-------------------------------");
+            System.out.println("Aguardando jogadores...");
         } else {
             try {
                 enviarMensagemTodos("Vocês perderam! As palavras não coincidem!");
-                System.out.println(corVermelha + "Vocês perderam! As palavras não coincidem!" + resetarCor);
+                System.out.println(corVermelha + "Os jogadores perderam! As palavras não coincidem!" + resetarCor);
                 palavra1 = null;
                 palavra2 = null;
             } catch (Exception e) {

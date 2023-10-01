@@ -8,7 +8,7 @@ public interface JuntosClientInterface extends Remote {
 
     void receberLetra(char letra) throws RemoteException;
 
-    void pegarNome() throws RemoteException;
+    void setNome() throws RemoteException;
 
-    String enviarNome() throws RemoteException;
+    String getNome() throws RemoteException;
 }

@@ -30,7 +30,7 @@ public class JuntosClient extends UnicastRemoteObject implements JuntosClientInt
     }
 
     @Override
-    public void pegarNome() throws RemoteException {
+    public void setNome() throws RemoteException {
         Scanner sc = new Scanner(System.in);
         System.out.println("Informe seu nome:");
         if (sc.hasNext()) {
@@ -42,7 +42,7 @@ public class JuntosClient extends UnicastRemoteObject implements JuntosClientInt
     }
 
     @Override
-    public String enviarNome() throws RemoteException {
+    public String getNome() throws RemoteException {
         return nome;
     }
 

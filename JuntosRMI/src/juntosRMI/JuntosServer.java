@@ -45,6 +45,6 @@ public class JuntosServer {
         System.out.println("-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/ /");
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         System.out.println("");
-        System.out.println("Servidor do Jogo 'Juntos' está ativo.");
+        System.out.println("Servidor do Jogo 'Juntos' está disponível e aguardando jogadores.");
     }
 }
